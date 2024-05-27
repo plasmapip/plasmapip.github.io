@@ -5,7 +5,7 @@ date: 2022-01-01 14:56 -0400
 description: This post focuses on the video feedback effect that is prevalent in this shader. Below are the inspiration for the effect, my twisted implementation, and some fun example loops.
 tags: Audio_Visual
 image:
-  path: assets\posts\Dv2_1X\22Q3_GritFluidWave2Sphere1_Water_PlasmaPipPortfolio_LowQual.gif
+  path: assets/posts/Dv2_1X/22Q3_GritFluidWave2Sphere1_Water_PlasmaPipPortfolio_LowQual.gif
   alt: Gif thumbnail of pixel displacement feedback
 ---
 
@@ -19,7 +19,7 @@ This post focuses on the **video feedback effect** that is prevalent in this sha
 
 {%
   include embed/video.html
-  src='assets\posts\Dv2_1X\TwitterExport22Q3_WIDE_PlasmaPipPortfolio.mp4'
+  src='assets/posts/Dv2_1X/TwitterExport22Q3_WIDE_PlasmaPipPortfolio.mp4'
   types='mp4|mov'
   title=''
   autoplay=true
@@ -41,12 +41,12 @@ Building on this framework, I replaced the td.rota.jxs transform shader (which h
 For context in the shader architecture, feedback is implemented between image matrices $A_1$ and $A_2$.
 (*See the previous post (! link !) for more context*)
 
-![PipShader_Architecture](assets\posts/Dv2_1X/ExpressivePixelShaderV21X_FXChain-Feedback_PlasmaPipPortfolio.jpg)
+![PipShader_Architecture](assets/posts/Dv2_1X/ExpressivePixelShaderV21X_FXChain-Feedback_PlasmaPipPortfolio.jpg)
 _Pip Shader Architecture_
 
 {%
   include embed/video.html
-  src='assets\posts/Dv2_1X/22Q3_Quatern16-FluidNoise2_Water_PlasmaPipPortfolio.mp4'
+  src='assets/posts/Dv2_1X/22Q3_Quatern16-FluidNoise2_Water_PlasmaPipPortfolio.mp4'
   types='mp4|mov'
   title='Fluid Noise 2'
   autoplay=false
@@ -60,7 +60,7 @@ This is the fun section. I generally added some pixel noise before the feedback 
 
 {%
   include embed/video.html
-  src='assets\posts\Dv2_1X\22Q3_Quatern16-FluidNoise1_Water_PlasmaPipPortfolio.mp4'
+  src='assets/posts/Dv2_1X/22Q3_Quatern16-FluidNoise1_Water_PlasmaPipPortfolio.mp4'
   types='mp4|mov'
   title='Fluid Noise 1'
   autoplay=false
@@ -70,7 +70,7 @@ This is the fun section. I generally added some pixel noise before the feedback 
 
 {%
   include embed/video.html
-  src='assets\posts/Dv2_1X/22Q3_Quatern16-FluidNoise3_Water_PlasmaPipPortfolio.mp4'
+  src='assets/posts/Dv2_1X/22Q3_Quatern16-FluidNoise3_Water_PlasmaPipPortfolio.mp4'
   types='mp4|mov'
   title='Fluid Noise 3'
   autoplay=false
@@ -93,7 +93,7 @@ _Fluid Flow_
 
 {%
   include embed/video.html
-  src='assets\posts\Dv2_1X\22Q3_DataSmearingQuatern_NotPixPerf_Water_PlasmaPipPortfolio.mp4'
+  src='assets/posts/Dv2_1X/22Q3_DataSmearingQuatern_NotPixPerf_Water_PlasmaPipPortfolio.mp4'
   types='mp4|mov'
   title='Demo video'
   autoplay=false
@@ -103,7 +103,7 @@ _Fluid Flow_
 
 {%
   include embed/video.html
-  src='assets\posts\Dv2_1X\22Q3_GritFluidWave2Sphere1_Water_PlasmaPipPortfolio.mp4'
+  src='assets/posts/Dv2_1X/22Q3_GritFluidWave2Sphere1_Water_PlasmaPipPortfolio.mp4'
   types='mp4|mov'
   title='Demo video'
   autoplay=false
