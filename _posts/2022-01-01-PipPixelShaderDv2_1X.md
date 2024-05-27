@@ -9,7 +9,6 @@ image:
   alt: Gif thumbnail of pixel displacement feedback
 ---
 
-
 # Pip Pixel Shader Dv2.1X – Displacement Feedback
 
 *This post is a continuation of a previous post: Pip Pixel Shader Dv2.0X (! Link !)*
