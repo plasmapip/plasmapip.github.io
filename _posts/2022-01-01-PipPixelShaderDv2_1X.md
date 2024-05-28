@@ -20,7 +20,7 @@ This post focuses on the **video feedback effect** that is prevalent in this sha
 {%
   include embed/video.html
   src='assets/posts/Dv2_1X/TwitterExport22Q3_WIDE_PlasmaPipPortfolio.mp4'
-  types='mp4|mov'
+  types='mp4'
   title=''
   autoplay=true
   loop=true
@@ -47,7 +47,7 @@ _Pip Shader Architecture_
 {%
   include embed/video.html
   src='assets/posts/Dv2_1X/22Q3_Quatern16-FluidNoise2_Water_PlasmaPipPortfolio.mp4'
-  types='mp4|mov'
+  types='mp4'
   title='Fluid Noise 2'
   autoplay=false
   loop=true
@@ -61,7 +61,7 @@ This is the fun section. I generally added some pixel noise before the feedback 
 {%
   include embed/video.html
   src='assets/posts/Dv2_1X/22Q3_Quatern16-FluidNoise1_Water_PlasmaPipPortfolio.mp4'
-  types='mp4|mov'
+  types='mp4'
   title='Fluid Noise 1'
   autoplay=false
   loop=true
@@ -71,7 +71,7 @@ This is the fun section. I generally added some pixel noise before the feedback 
 {%
   include embed/video.html
   src='assets/posts/Dv2_1X/22Q3_Quatern16-FluidNoise3_Water_PlasmaPipPortfolio.mp4'
-  types='mp4|mov'
+  types='mp4'
   title='Fluid Noise 3'
   autoplay=false
   loop=true
@@ -94,7 +94,7 @@ _Fluid Flow_
 {%
   include embed/video.html
   src='assets/posts/Dv2_1X/22Q3_DataSmearingQuatern_NotPixPerf_Water_PlasmaPipPortfolio.mp4'
-  types='mp4|mov'
+  types='mp4'
   title='Demo video'
   autoplay=false
   loop=true
@@ -104,7 +104,7 @@ _Fluid Flow_
 {%
   include embed/video.html
   src='assets/posts/Dv2_1X/22Q3_GritFluidWave2Sphere1_Water_PlasmaPipPortfolio.mp4'
-  types='mp4|mov'
+  types='mp4'
   title='Demo video'
   autoplay=false
   loop=true

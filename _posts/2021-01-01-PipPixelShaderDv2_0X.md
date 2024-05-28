@@ -6,7 +6,7 @@ description: After making an initial “expressive pixel” shader demo in 2020 
 tags: Audio_Visual
 math: true
 image:
-  path: assets/posts/Dv2_0X/TunnelPulseLoopZoomOut_216p_PlasmaPipPortfolio.gif
+  path: /assets/posts/Dv2_0X/TunnelPulseLoopZoomOut_216p_PlasmaPipPortfolio.gif
   alt: Gif thumbnail of twisting pixel tunnel
 ---
 
@@ -29,8 +29,7 @@ TL:DR; It got optimized, but I added more complexity and there’s still room fo
 
 {%
   include embed/video.html
-  src='assets/posts/Dv2_0X/HyperWaveZoom_SocialExport_PlasmaPipPotfolio.mp4'
-  types='mp4|mov'
+  src='/assets/posts/Dv2_0X/HyperWaveZoom_SocialExport_PlasmaPipPotfolio.mp4'
   title=''
   autoplay=false
   loop=true
@@ -57,8 +56,7 @@ Mode 3 [C]: Multiple sin/cos and spherical-cartesian mixing to make a block-like
 
 {%
   include embed/video.html
-  src='assets/posts/Dv2_0X/TunnelPulseLoopZoomOut_1080p_PlasmaPipPortfolio.mp4'
-  types='mp4|mov'
+  src='/assets/posts/Dv2_0X/TunnelPulseLoopZoomOut_1080p_PlasmaPipPortfolio.mp4'
   title=''
   autoplay=false
   loop=true
@@ -67,8 +65,7 @@ Mode 3 [C]: Multiple sin/cos and spherical-cartesian mixing to make a block-like
 
 {%
   include embed/video.html
-  src='assets/posts/Dv2_0X/Mode3PinkLinePatterns320x180px_DV2,19_PlasmaPipPortfolio.mp4'
-  types='mp4|mov'
+  src='/assets/posts/Dv2_0X/Mode3PinkLinePatterns320x180px_DV2-19_PlasmaPipPortfolio.mp4'
   title=''
   autoplay=false
   loop=true
