@@ -6,7 +6,7 @@ description: Hey there! I recently rebuilt this site, so older posts are pending
 permalink: post/SiteMigration
 math: False
 image:
-  path: https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihY77GBvfTB5kiUrKB-DkUD8LBqpQCOqdBu0GKN7wQQl9ClUCvNfrcvOEry-mr_q7SopeMl0uyrhSw34BD3Mfn_409apZTiTgqU=w1920-h911-rw-v1
+  path: assets\posts\migration\DV3-X_SpringHyperSmile_169.png
   alt: :P
 ---
 

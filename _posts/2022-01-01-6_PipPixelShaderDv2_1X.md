@@ -7,7 +7,7 @@ permalink: post/06_Dv2_1X
 tags: Audio_Visual
 math: True
 image:
-  path: https://lh3.googleusercontent.com/drive-viewer/AKGpihYMdJuXZCQSUWlwMnvXsDhGy0nH09NztGrpOBODeraiSrW_2Ep3OekDvJNnNNuUQ3vPD2Hyg2og7EheOe4P6rF1jc3eIcWZRg=w1920-h911
+  path: https://res.cloudinary.com/djgbvvcmn/image/upload/22Q3_GritFluidWave2Sphere1_Water_PlasmaPip_qlisgz.gif
   alt: GIF 1; thumbnail of pixel displacement feedback
 ---
 
@@ -40,7 +40,7 @@ _Video i-EXTERNAL ([Ref](https://www.youtube.com/watch?v=a10QZtvn-ro){:target="_
 
 Building on this framework, I replaced the td.rota.jxs transform shader (which has parameters like zoom, position, rotation) with a jit.gl.pix. This allows the use of vector math with imaginary numbers to create a new set of non-linear transformations to control the video feedback (fun fact, MAX has imaginary vector functions built in!) The exact vector “math” was arbitrary, mostly done by “guess-and-check”. For others interested in achieving similar effects, the behavior reminds me of jit.gl.bfg, which might be a more direct route for similar transformations.
 
-![PipShader_Architecture](https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihakZ6RiBKv9ghRh83zbRQdd_RA9joxttinN196dD2XeOLu89ZLLjN4IG5rVJPxgV2jjxbpu8XuXLGWtcDrT0Rey5cPLUsmg5w=w1920-h911-rw-v1)
+![PipShader_Architecture](assets\posts\6_Dv2_1X\ExpressivePixelShaderV21X_FXChain-Feedback_PlasmaPip.jpg)
 _Figure 1: Pip Shader Architecture_
 
 For context in the shader architecture, feedback is implemented between image matrices $A_1$ and $A_2$.
@@ -50,7 +50,7 @@ For context in the shader architecture, feedback is implemented between image ma
   include embed/video.html
   src='https://res.cloudinary.com/djgbvvcmn/video/upload/v1720126295/22Q3_Quatern16-FluidNoise2_Water_PlasmaPip_li4usi.mp4'
   types='mp4'
-  title='Video 2: Fluid Noise ii'
+  title='Video 2: Fluid Noise #2'
   autoplay=false
   loop=true
   muted=true
@@ -64,7 +64,7 @@ This is the fun section. I generally added some pixel noise before the feedback 
   include embed/video.html
   src='https://res.cloudinary.com/djgbvvcmn/video/upload/v1720126300/22Q3_Quatern16-FluidNoise1_Water_PlasmaPip_zfcxy7.mp4'
   types='mp4'
-  title='Video 3: Fluid Noise i'
+  title='Video 3: Fluid Noise #1'
   autoplay=false
   loop=true
   muted=true
@@ -74,7 +74,7 @@ This is the fun section. I generally added some pixel noise before the feedback 
   include embed/video.html
   src='https://res.cloudinary.com/djgbvvcmn/video/upload/v1720126288/22Q3_Quatern16-FluidNoise3_Water_PlasmaPip_hf93pe.mp4'
   types='mp4'
-  title='Video 4: Fluid Noise iii'
+  title='Video 4: Fluid Noise #3'
   autoplay=false
   loop=true
   muted=true
@@ -102,7 +102,7 @@ While not a mathematically robustly description, the effect is as if the image p
   include embed/video.html
   src='https://res.cloudinary.com/djgbvvcmn/video/upload/v1720126294/22Q3_DataSmearingQuatern_NotPixPerf_Water_PlasmaPip_gir0nu.mp4'
   types='mp4'
-  title='Video 5: Data Smearing Quatern'
+  title='Video 5: Data Smearing Wave'
   autoplay=false
   loop=true
   muted=true

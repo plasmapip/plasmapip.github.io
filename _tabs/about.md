@@ -4,7 +4,7 @@ icon: fas fa-info-circle
 order: 1
 ---
 
-![PlasmaPipLogo](assets/Plasma_Face_small.png){: width="200" height="200" .left}
+![PlasmaPipLogo](assets/PlasmaPip_PFP_1118p.png){: width="200" height="200" .left}
 
 (they/he, 26, now based in US Pittsburgh area)
 
