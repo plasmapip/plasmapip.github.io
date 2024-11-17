@@ -54,3 +54,7 @@ While this version made very complex and deep patterns, there was a lot of perfo
 ---
 
 *This post has a continuation post:  Pip Pixel Shader Dv2.0X ([Link](https://www.plasmapip.com/post/05_Dv2_0X))*
+
+---
+
+*The files within this web page are licensed under a [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/){:target="_blank"} Attribution-NonCommercial-ShareAlike International license.*

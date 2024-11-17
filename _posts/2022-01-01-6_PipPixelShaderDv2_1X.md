@@ -122,3 +122,7 @@ While not a mathematically robustly description, the effect is as if the image p
 
 {% include embed/youtube.html id='MmKRq9VL_3E'%}
 _Video 7: 2021 Collab: A: M68K / V: PlasamPip_
+
+---
+
+*The files within this web page are licensed under a [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/){:target="_blank"} Attribution-NonCommercial-ShareAlike International license.*

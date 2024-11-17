@@ -101,3 +101,7 @@ _Video 4: Saitone's URL set on MICROMUSIC.ITALY, 2021._
 At first, these changes improves audio response and rendering FPS by about ~25% from Dv1.XX. However, I later added additional effects like a kaleidoscope filter and video overlay (more in Dv2.2X), causes some lag issues, and now performs between 20 to 40 FPS… Further structure simplification is required.
 
 *This post has a continuation post:  Pip Pixel Shader Dv2.1X ([Link](https://www.plasmapip.com/post/06_Dv2_1X))*
+
+---
+
+*The files within this web page are licensed under a [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/){:target="_blank"} Attribution-NonCommercial-ShareAlike International license.*
