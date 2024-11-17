@@ -40,7 +40,7 @@ _Video i-EXTERNAL ([Ref](https://www.youtube.com/watch?v=a10QZtvn-ro){:target="_
 
 Building on this framework, I replaced the td.rota.jxs transform shader (which has parameters like zoom, position, rotation) with a jit.gl.pix. This allows the use of vector math with imaginary numbers to create a new set of non-linear transformations to control the video feedback (fun fact, MAX has imaginary vector functions built in!) The exact vector “math” was arbitrary, mostly done by “guess-and-check”. For others interested in achieving similar effects, the behavior reminds me of jit.gl.bfg, which might be a more direct route for similar transformations.
 
-![PipShader_Architecture](assets\posts\6_Dv2_1X\ExpressivePixelShaderV21X_FXChain-Feedback_PlasmaPip.jpg)
+![PipShader_Architecture](assets/posts/6_Dv2_1X/ExpressivePixelShaderV21X_FXChain-Feedback_PlasmaPip.jpg)
 _Figure 1: Pip Shader Architecture_
 
 For context in the shader architecture, feedback is implemented between image matrices $A_1$ and $A_2$.
