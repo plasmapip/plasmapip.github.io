@@ -6,7 +6,7 @@ permalink: commission
 ---
 
 <h1 style="text-align: center;">Visualist Commission Status:</h1>
-<p style="text-align: center;">(as of 2024-Q3)</p>
+<p style="text-align: center;">(as of 2025-Q2)</p>
 
 **IRL Visuals:** Tentative \\
 **URL Visuals:** CLOSED
@@ -15,6 +15,15 @@ Interested in collaborating, or just talking shop? Please reach out!
 
 <h1 style="text-align: center;">Commission Portfolio:</h1>
 <p style="text-align: center;">All performed live</p>
+
+## SUPER MAGFest MAINSTAGE - Chiprave – IRL – 01/26/2025
+
+{% include embed/youtube.html id='x2Vx9wDsfDc'%}
+
+First time on The Big Stage, playing my audio-reactive visual engine combined with themed sections. \\
+Music Performers; [amateurLSDJ](https://amateurlsdj.bandcamp.com/music){:target="_blank"}
+
+*(Shader version: Dv4.17)*
 
 ## SUPER MAGFest Chipspace – IRL – 01/18/2024
 

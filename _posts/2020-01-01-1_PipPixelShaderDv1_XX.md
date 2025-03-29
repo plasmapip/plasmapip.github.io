@@ -24,7 +24,7 @@ In 2020 I slipped into the "[jit.gen](https://docs.cycling74.com/legacy/max8/ref
 
 These clips started with a blank three-channel image matrix and use math to change the RGB color values of each pixel. No external images or video inputs. 
 
-The two below inculde audio from my early attempts at LSDJ:
+The two below include audio from my early attempts at LSDJ:
 {%
   include embed/video.html
   src='https://res.cloudinary.com/dp5qoqnat/video/upload/PipPixShaderV1_8GooLSDJaudioLOOP_PlasmaPip_kijgff.mp4'
