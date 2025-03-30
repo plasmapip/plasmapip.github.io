@@ -31,12 +31,15 @@ Coord. Rotation Matrix:	[https://en.wikipedia.org/wiki/Rotation_matrix](https://
 
 Golden Spiral:		      [https://en.wikipedia.org/wiki/Golden_spiral](https://en.wikipedia.org/wiki/Golden_spiral){:target="_blank"}
 
+## Lecture Slides (Work in progress!)
+
+<iframe src="https://drive.google.com/file/d/1ejPnPqXmPh2VTS3K1RtJH4x-zJw98TO4/preview" width="854" height="480" allow="autoplay"></iframe>
 
 ## GLSL Example: Interactive Spiral (Shadertoy Implementation)
 
 Interact with the shader by clicking and dragging on the screen.
 
-<iframe width="960" height="540" frameborder="0" src="https://www.shadertoy.com/embed/W3s3z8?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
+<iframe width="854" height="480" frameborder="0" src="https://www.shadertoy.com/embed/W3s3z8?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
 
 You can run and modify this code in real time by copying the code below and visiting The Force!
 
@@ -122,7 +125,7 @@ void main () {
     uv_transform = uv_transform*rotate(0.05*mouse_pos_y);   // 1 // uv_transform*rotate(0.05*mouse_pos_y)
     uv_transform = uv_transform + vec2(0.5);  // 3
     
-    vec4 buffer_frame = (texture2D(backbuffer, uv_transform) - vec4(0.0, 0.01, 0.05, 1.0)) * decay;
+    vec4 buffer_frame = (texture2D(backbuffer, uv_transform) - vec4(0.0, 0.01, 0.05, 1.0)) * decay; // adding slight color shift per buffer
     
     // average the previous frame with current frame
     vec4 rbga_feedback = mix(buffer_frame, rbga_spiral_fract, 0.01);
