@@ -161,6 +161,172 @@ void main () {
 // uniform vec4     backbuffer;         // Stores gl_FragColor from previous frame
 ```
 
+## Tutorial - Web version Draft:
+
+1) Blank Screen:
+```c++
+void main () {
+    
+	// Output to screen
+	gl_FragColor = vec4(0., 0., 0., 0.);
+}
+```
+
+(embed black shader)
+
+2) Color Coordinates
+```c++
+// Shader Inputs (on by default) //
+// more info: https://thebookofshaders.com/03/
+
+// uniform vec3     gl_FragCoord;       // window coordinates of fragment shader (x,y,z)
+// uniform vec2     resolution;         // viewport resolution (in pixels)
+// uniform float    time;               // shader playback time (in seconds)
+// uniform vec4     mouse;              // mouse X,Y coordinate, mouse click X,Y coordinate
+
+void main () {
+
+    // Normalized pixel coordinates to unit vectors: x,y -> u,v (from 0 to 1)
+    vec2 uv = (gl_FragCoord.xy / resolution.xy);
+    
+	  // Output to screen
+	  gl_FragColor = vec4(uv.x, 0., uv.y, 1.);
+}
+
+// Shader Outputs //
+
+// uniform vec4     gl_FragColor;       // color of fragment shader [R, G, B, A]
+// uniform vec4     backbuffer;         // Stores gl_FragColor from previous frame
+```
+
+(embed RxBy shader)
+
+3) Center the coordinate system
+```c++
+void main () {
+
+    // Normalized pixel coordinates to unit vectors: x,y -> u,v (from 0 to 1)
+    vec2 uv = (gl_FragCoord.xy / resolution.xy);
+    
+    // Create new UV, centered at the screen center, for polar coordinates.
+    vec2 square_aspect_ratio = resolution.xy/resolution.x;
+    vec2 uv_centered = (2.*uv - 1.) * square_aspect_ratio;
+
+    // Output to screen
+	  gl_FragColor = vec4(uv.x, 0., uv.y, 1.);
+}
+```
+
+(annotated image of centered polar coordinates)
+
+4) Create fuction to generate a spiral
+
+```c++
+// Function: Generate Spiral
+float spiralWave(vec2 uv_centered, float curve_ratio, float rate, float num_spirals) {
+    
+    // Calculate polar coordinates of centered UV space (r, theta)
+    float r = length(uv_centered);
+    float theta = atan(uv_centered.x,uv_centered.y);
+    
+    // Generate circle, and add theta to offset into spirals
+    float circles = r; 
+    float circles_zoom = sin(r*1. + time); // sin(r*10 + time); 
+    float spiral_zoom  = sin(r*10. + theta*0.05 + time); // sin(r*10. + theta + time)
+    float n_spirals    = sin(r*10. + theta * num_spirals + time);
+    
+    return n_spirals;
+}
+
+// use the fuction in our main output
+void main () {
+    // Normalized pixel coordinates to unit vectors: x,y -> u,v (from 0 to 1)
+    // Create new UV, centered at the screen center, for polar coordinates.
+    ...
+    // Create Spiral
+    float gray_spiral = (-50. + spiral_width) + 50. * spiralWave(uv_centered, goldenRatio, zoom_speed, num_spirals);
+    
+    // Output to screen
+	  gl_FragColor = vec4(vec3(gray_spiral), 1.);
+}
+```
+
+(circle shader embed)
+
+5) Make spiral aesthetic with the Golden Ratio
+```c++
+// Function: Generate Golden Spiral
+float spiralWave(vec2 uv_centered, float curve_ratio, float rate, float num_spirals) {
+    
+    // Calculate polar coordinates of centered UV space (r, theta)
+    float r = length(uv_centered);
+    float theta = atan(uv_centered.x,uv_centered.y);
+    
+    // Modifying curve rate to be a golden ratio
+    float golden_ratio_spiral = log(r)/curve_ratio + theta;
+    float one_golden_ratio_spiral = sin( golden_ratio_spiral + time);
+    float n_golden_ratio_spiral = sin( golden_ratio_spiral * num_spirals + time);
+    
+    return n_golden_ratio_spiral;
+}
+
+// use the fuction in our main output
+void main () {
+    // Normalized pixel coordinates to unit vectors: x,y -> u,v (from 0 to 1)
+    // Create new UV, centered at the screen center, for polar coordinates.
+    ...
+    // Create Spiral
+    float gray_spiral = (-50. + spiral_width) + 50. * spiralWave(uv_centered, goldenRatio, zoom_speed, num_spirals);
+    
+    // Output to screen
+	  gl_FragColor = vec4(vec3(gray_spiral), 1.);
+}
+```
+
+(golden ratio spiral shader embed)
+
+6) Make spiral pattern more interesting
+
+```c++
+void main () {
+    // Normalized pixel coordinates to unit vectors: x,y -> u,v (from 0 to 1)
+    // Create new UV, centered at the screen center, for polar coordinates.
+    ...
+    // Create Spiral
+    float gray_spiral = (-50. + spiral_width) + 50. * spiralWave(uv_centered, goldenRatio, zoom_speed, num_spirals);
+
+    // Invert half of the spiral
+    float invert_rotate = 0.25*time;
+    float gray_spiral_split = gray_spiral*sin( sin(invert_rotate)*uv_centered.y + cos(invert_rotate)*uv_centered.x);
+    
+    // Invert half of the spiral again, but in the opposite direction
+    float gray_spiral_rotate = gray_spiral_split*(sin( cos(invert_rotate+0.5)*uv_centered.y + sin(invert_rotate+0.5)*uv_centered.x)*20.);
+    
+    // Apply fract
+    float gray_spiral_fract = fract(gray_spiral_rotate/100.);
+    vec4 rbga_spiral_fract = vec4(vec3(gray_spiral_fract),1.0);
+    
+    // Output to screen
+	  gl_FragColor = rbga_spiral_fract;
+}
+```
+
+(complex golden ratio spiral shader embed)
+
+(explain Fract effect, or at least link)
+
+7) Video Feedback - Frame Linear Translation
+
+(backbuffer) ...
+
+8) Video Feedback - Frame Linear Rotation about center
+
+(rotation matrix) ...
+
+9) Add final complexity with fract() effect, and adding Mouse interactivity
+
+(embed)
+
 ---
 
 *The files within this web page are licensed under a [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/){:target="_blank"} Attribution-NonCommercial-ShareAlike International license.*
