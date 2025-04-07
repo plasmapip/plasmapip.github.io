@@ -31,15 +31,11 @@ Coord. Rotation Matrix:	[https://en.wikipedia.org/wiki/Rotation_matrix](https://
 
 Golden Spiral:		      [https://en.wikipedia.org/wiki/Golden_spiral](https://en.wikipedia.org/wiki/Golden_spiral){:target="_blank"}
 
-## Lecture Slides (Work in progress!)
-
-<iframe src="https://drive.google.com/file/d/1ejPnPqXmPh2VTS3K1RtJH4x-zJw98TO4/preview" width="854" height="480" allow="autoplay"></iframe>
-
 ## GLSL Example: Interactive Spiral (Shadertoy Implementation)
 
 Interact with the shader by clicking and dragging on the screen.
 
-<iframe width="854" height="480" frameborder="0" src="https://www.shadertoy.com/embed/W3s3z8?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
+<iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/W3s3z8?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
 
 You can run and modify this code in real time by copying the code below and visiting The Force!
 
@@ -161,9 +157,11 @@ void main () {
 // uniform vec4     backbuffer;         // Stores gl_FragColor from previous frame
 ```
 
-## Tutorial - Web version Draft:
+## Code Walkthrough - Web version (Active Draft):
 
-1) Blank Screen:
+NOTE: I am actively building up this documentation. Please check back in a month or so for the complete version!
+
+### 1) Blank Screen:
 ```c++
 void main () {
     
@@ -172,9 +170,11 @@ void main () {
 }
 ```
 
-(embed black shader)
+![1_Blank-Screen](assets/posts/7_GLSL-mini-lecture/1_Blank-Screen.png)
 
-2) Color Coordinates
+_Figure 1: Blank Screen_
+
+### 2) Colored Coordinates
 ```c++
 // Shader Inputs (on by default) //
 // more info: https://thebookofshaders.com/03/
@@ -189,8 +189,8 @@ void main () {
     // Normalized pixel coordinates to unit vectors: x,y -> u,v (from 0 to 1)
     vec2 uv = (gl_FragCoord.xy / resolution.xy);
     
-	  // Output to screen
-	  gl_FragColor = vec4(uv.x, 0., uv.y, 1.);
+	// Output to screen
+	gl_FragColor = vec4(uv.x, 0., uv.y, 1.);
 }
 
 // Shader Outputs //
@@ -199,9 +199,11 @@ void main () {
 // uniform vec4     backbuffer;         // Stores gl_FragColor from previous frame
 ```
 
-(embed RxBy shader)
+![2_Blank-Screen](assets/posts/7_GLSL-mini-lecture/2_Color-Coordinates.png)
 
-3) Center the coordinate system
+_Figure 2: Colored Unit Coordinates (U,V)_
+
+### 3) Center the coordinate system
 ```c++
 void main () {
 
@@ -213,13 +215,17 @@ void main () {
     vec2 uv_centered = (2.*uv - 1.) * square_aspect_ratio;
 
     // Output to screen
-	  gl_FragColor = vec4(uv.x, 0., uv.y, 1.);
+	gl_FragColor = vec4(uv.x, 0., uv.y, 1.);
 }
 ```
 
-(annotated image of centered polar coordinates)
+![3_Center-Coordinate-System](assets/posts/7_GLSL-mini-lecture/3_Center-Coordinate-System.png)
 
-4) Create fuction to generate a spiral
+_Figure 3: Centered Unit Coordinate System_
+
+### 4) Create fuction to generate a spiral
+
+Explain polar coordinates.
 
 ```c++
 // Function: Generate Spiral
@@ -241,19 +247,22 @@ float spiralWave(vec2 uv_centered, float curve_ratio, float rate, float num_spir
 // use the fuction in our main output
 void main () {
     // Normalized pixel coordinates to unit vectors: x,y -> u,v (from 0 to 1)
+    vec2 uv = (gl_FragCoord.xy / resolution.xy);
     // Create new UV, centered at the screen center, for polar coordinates.
-    ...
-    // Create Spiral
-    float gray_spiral = (-50. + spiral_width) + 50. * spiralWave(uv_centered, goldenRatio, zoom_speed, num_spirals);
+    vec2 square_aspect_ratio = resolution.xy/resolution.x;
+    vec2 uv_centered = (2.*uv - 1.) * square_aspect_ratio;
+
+    // Create sin spiral
+    float gray_spiral = spiralWave(uv_centered, goldenRatio, zoom_speed, num_spirals);
     
     // Output to screen
-	  gl_FragColor = vec4(vec3(gray_spiral), 1.);
+	gl_FragColor = vec4(vec3(gray_spiral), 1.);
 }
 ```
 
-(circle shader embed)
+<iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/W323Dz?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
 
-5) Make spiral aesthetic with the Golden Ratio
+### 5) Make spiral aesthetic with the Golden Ratio
 ```c++
 // Function: Generate Golden Spiral
 float spiralWave(vec2 uv_centered, float curve_ratio, float rate, float num_spirals) {
@@ -275,25 +284,27 @@ void main () {
     // Normalized pixel coordinates to unit vectors: x,y -> u,v (from 0 to 1)
     // Create new UV, centered at the screen center, for polar coordinates.
     ...
-    // Create Spiral
-    float gray_spiral = (-50. + spiral_width) + 50. * spiralWave(uv_centered, goldenRatio, zoom_speed, num_spirals);
+    // Create sin spiral
+    float gray_spiral = spiralWave(uv_centered, goldenRatio, zoom_speed, num_spirals);
     
     // Output to screen
-	  gl_FragColor = vec4(vec3(gray_spiral), 1.);
+	gl_FragColor = vec4(vec3(gray_spiral), 1.);
 }
 ```
 
-(golden ratio spiral shader embed)
+<iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/t32GWR?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
 
-6) Make spiral pattern more interesting
+### 6) Make spiral pattern more interesting
 
 ```c++
 void main () {
     // Normalized pixel coordinates to unit vectors: x,y -> u,v (from 0 to 1)
     // Create new UV, centered at the screen center, for polar coordinates.
     ...
-    // Create Spiral
-    float gray_spiral = (-50. + spiral_width) + 50. * spiralWave(uv_centered, goldenRatio, zoom_speed, num_spirals);
+    // Create sin spiral
+    float gray_spiral = spiralWave(uv_centered, goldenRatio, zoom_speed, num_spirals);
+    // Over saturate values beyond 0:1 for clipping / threshold effect.
+    float gray_spiral_clipped = (-50. + spiral_width) + 50. * gray_spiral;
 
     // Invert half of the spiral
     float invert_rotate = 0.25*time;
@@ -307,23 +318,27 @@ void main () {
     vec4 rbga_spiral_fract = vec4(vec3(gray_spiral_fract),1.0);
     
     // Output to screen
-	  gl_FragColor = rbga_spiral_fract;
+	gl_FragColor = rbga_spiral_fract;
 }
 ```
 
-(complex golden ratio spiral shader embed)
+Over saturate values beyond 0:1 for clipping / threshold effect.
 
-(explain Fract effect, or at least link)
+Invert half of the spiral, twice.
 
-7) Video Feedback - Frame Linear Translation
+Take the fractional value of the oversaturated sin to see contours of values that were above 1 (or 255), using the "fract()" effect. More info on fract() at [The Book of Shaders](https://thebookofshaders.com/glossary/?search=fract){:target="_blank"}
+
+<iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/t3j3WR?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
+
+### 7) Video Feedback - Frame Linear Translation
 
 (backbuffer) ...
 
-8) Video Feedback - Frame Linear Rotation about center
+### 8) Video Feedback - Frame Linear Rotation about center
 
 (rotation matrix) ...
 
-9) Add final complexity with fract() effect, and adding Mouse interactivity
+### 9) Add final complexity with fract() effect, and adding Mouse interactivity
 
 (embed)
 
