@@ -100,17 +100,19 @@ void main () {
     // Create new UV, centered at the screen center, for polar coordinates.
     vec2 square_aspect_ratio = resolution.xy/resolution.x;
     vec2 uv_centered = (2.*uv - 1.) * square_aspect_ratio;
-    // Create Spiral
-    float gray_spiral = (-50. + spiral_width) + 50. * spiralWave(uv_centered, goldenRatio, zoom_speed, num_spirals);
+
+    // Create sin spiral
+    float gray_spiral = spiralWave(uv_centered, goldenRatio, zoom_speed, num_spirals);
+    // Over saturate values beyond 0:1 for clipping / threshold effect.
+    float gray_spiral_clipped = (-50. + spiral_width) + 50. * gray_spiral;
     // Invert half of the spiral
-    float invert_rotate = 0.25*time; //   - bands.x*1.
+    float invert_rotate = 0.25*time;
     float gray_spiral_split = gray_spiral*sin( sin(invert_rotate)*uv_centered.y + cos(invert_rotate)*uv_centered.x);
     // Invert half of the spiral again, but in the opposite direction
     float gray_spiral_rotate = gray_spiral_split*(sin( cos(invert_rotate+0.5)*uv_centered.y + sin(invert_rotate+0.5)*uv_centered.x)*20.);
     // Apply fract
     float gray_spiral_fract = fract(gray_spiral_rotate/100.);
     vec4 rbga_spiral_fract = vec4(vec3(gray_spiral_fract),1.0);
-    
     
     // FEEDBACK!
     
@@ -145,8 +147,6 @@ void main () {
         frag_rgba_slider = rbga_feedback_fract;
     
 	// Output to screen
-	//gl_FragColor = vec4(uv.x, gray_spiral_fract, uv.y, 1.);
-	//gl_FragColor = vec4(vec3(gray_spiral), 1.);
 	gl_FragColor = frag_rgba_slider;
 
 }
@@ -333,6 +333,42 @@ Take the fractional value of the oversaturated sin to see contours of values tha
 ### 7) Video Feedback - Frame Linear Translation
 
 (backbuffer) ...
+
+```c++
+void main () {
+    // Normalized pixel coordinates to unit vectors: x,y -> u,v (from 0 to 1)
+    // Create new UV, centered at the screen center, for polar coordinates.
+    // Create sin spiral
+    // Over saturate values beyond 0:1 for clipping / threshold effect.
+    // Invert half of the spiral
+    // Invert half of the spiral again, but in the opposite direction
+    // Apply fract
+    ...
+    vec4 rbga_spiral_fract = vec4(vec3(gray_spiral_fract),1.0);
+
+    // Apply linear displacement to the 'uv' coordinate system
+    vec2 uv_transform = uv + vec2(-0.01, 0.0025);
+    // Get the previously rendered frame into the current buffer.
+    // In Shadertoy, iChannel0 = backbuffer
+    vec4 buffer_frame = texture(backbuffer, uv_transform);
+    
+    // average the previous frame with current frame
+    float mix_amount = 0.1;
+    vec4 rbga_feedback = mix(buffer_frame, rbga_spiral_fract, mix_amount);
+    
+    // Split the rendering screen per effect layer
+    vec4 rgba_mode_layer; // empty vec4
+    if(uv.x < 0.5)
+        rgba_mode_layer = rbga_spiral_fract;
+    else if(uv.x >= 0.5)
+        rgba_mode_layer = rbga_feedback;
+    
+    // Output to screen
+	gl_FragColor = rbga_spiral_fract;
+}
+```
+
+<iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/3XsSW8?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
 
 ### 8) Video Feedback - Frame Linear Rotation about center
 
