@@ -297,6 +297,8 @@ void main () {
 ### 6) Make spiral pattern more interesting
 
 ```c++
+// Function: Generate Golden Spiral
+
 void main () {
     // Normalized pixel coordinates to unit vectors: x,y -> u,v (from 0 to 1)
     // Create new UV, centered at the screen center, for polar coordinates.
@@ -335,6 +337,8 @@ Take the fractional value of the oversaturated sin to see contours of values tha
 (backbuffer) ...
 
 ```c++
+// Function: Generate Golden Spiral
+
 void main () {
     // Normalized pixel coordinates to unit vectors: x,y -> u,v (from 0 to 1)
     // Create new UV, centered at the screen center, for polar coordinates.
@@ -342,9 +346,7 @@ void main () {
     // Over saturate values beyond 0:1 for clipping / threshold effect.
     // Invert half of the spiral
     // Invert half of the spiral again, but in the opposite direction
-    // Apply fract
-    ...
-    vec4 rbga_spiral_fract = vec4(vec3(gray_spiral_fract),1.0);
+    // Apply fract, get 'vec4 rbga_spiral_fract'.
 
     // Apply linear displacement to the 'uv' coordinate system
     vec2 uv_transform = uv + vec2(-0.01, 0.0025);
@@ -364,7 +366,7 @@ void main () {
         rgba_mode_layer = rbga_feedback;
     
     // Output to screen
-	gl_FragColor = rbga_spiral_fract;
+	gl_FragColor = rgba_mode_layer;
 }
 ```
 
@@ -374,9 +376,85 @@ void main () {
 
 (rotation matrix) ...
 
-### 9) Add final complexity with fract() effect, and adding Mouse interactivity
+```c++
+// Function: Generate Golden Spiral
 
-(embed)
+// Function: Rotation Matrix. https://en.wikipedia.org/wiki/Rotation_matrix
+mat2 rotate(float angle) {
+
+    return mat2(
+        cos(angle), -sin(angle),
+        sin(angle), cos(angle)
+    );
+}
+
+void main () {
+    // Normalized pixel coordinates to unit vectors: x,y -> u,v (from 0 to 1)
+    // Create new UV, centered at the screen center, for polar coordinates.
+    // Create sin spiral
+    // Over saturate values beyond 0:1 for clipping / threshold effect.
+    // Invert half of the spiral
+    // Invert half of the spiral again, but in the opposite direction
+    // Apply fract, get 'vec4 rbga_spiral_fract'.
+
+    // Rotate the 'uv' coordinate system about the center of the screen.
+    vec2 uv_transform = uv - vec2(0.5);
+    uv_transform = uv_transform*rotate(0.05);
+    uv_transform = uv_transform + vec2(0.5);
+    // Get the previously rendered frame into the current buffer.
+    // In Shadertoy, iChannel0 = backbuffer
+    vec4 buffer_frame = texture(backbuffer, uv_transform);
+    
+    // average the previous frame with current frame
+    float mix_amount = 0.1;
+    vec4 rbga_feedback = mix(buffer_frame, rbga_spiral_fract, mix_amount);
+    
+    // Split the rendering screen per effect layer
+    // Output to screen
+	gl_FragColor = rgba_mode_layer;
+}
+```
+
+<iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/3XjXRV?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
+
+
+### 9) Adding eye-candy: Frame delay coloring and extra fract()
+
+(frame coloring)
+
+```c++
+// Function: Generate Golden Spiral
+// Function: Rotation Matrix. https://en.wikipedia.org/wiki/Rotation_matrix
+
+void main () {
+    // Normalized pixel coordinates to unit vectors: x,y -> u,v (from 0 to 1)
+    // Create new UV, centered at the screen center, for polar coordinates.
+    // Create sin spiral
+    // Over saturate values beyond 0:1 for clipping / threshold effect.
+    // Invert half of the spiral
+    // Invert half of the spiral again, but in the opposite direction
+    // Apply fract, get 'vec4 rbga_spiral_fract'.
+    // Rotate the 'uv' coordinate system about the center of the screen.
+ 
+    // Get the previously rendered frame into the current buffer.
+    // In Shadertoy, iChannel0 = backbuffer
+    vec4 buffer_frame = texture(backbuffer, uv_transform); 
+    // add slight color shift per buffer
+    buffer_frame = (buffer_frame - vec4(0.0, 0.01, 0.05, 1.0)) * decay;
+    
+    // average the previous frame with current frame
+    float mix_amount = 0.1;
+    vec4 rbga_feedback = mix(buffer_frame, rbga_spiral_fract, mix_amount);
+
+    // fun fract() effect
+    vec4 rbga_feedback_fract = fract(max(fract(rbga_feedback*1.02), 1.-rbga_spiral_fract)*1.1);
+
+    // Output to screen
+	gl_FragColor = rbga_feedback_fract;
+}
+```
+
+<iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/W32XRV?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
 
 ---
 
