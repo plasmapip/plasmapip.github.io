@@ -3,7 +3,7 @@ layout: post
 title: Mini Lecture - A GLSL Tutorial in Practice
 date: 2025-03-29 14:56 -0400
 description: How does GLSL work, and how is it used?
-permalink: post/07_GLSL-mini-lecture
+permalink: post/07_mini-lecture-GLSL
 tags: Learning
 math: True
 image:
