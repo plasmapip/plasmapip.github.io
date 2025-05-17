@@ -8,24 +8,24 @@ tags: Learning
 math: True
 image:
   path: assets/posts/7_GLSL-mini-lecture/GLSL-mini-cover_pp.jpg
-  alt: thumbnail for a GLSL Shader.
+  alt: A GLSL Shader, frozen with anticipation.
 ---
 
 ## Before we begin: Why learn GLSL?
 
-There is an extensive list of creative coding and audio/visual software that one can learn to create art (Visualist/DJ lime68k has listed 57 on their [vjing tools and resources list](https://l68k.com/things/vjing){:target="_blank"} ). 
+There is an extensive collection of creative coding and audio/visual software that one can learn to create art (Visualist/DJ lime68k has listed 57 on their [vjing tools and resources list](https://l68k.com/things/vjing){:target="_blank"} ). 
 
-**DO NOT try to learn all of them.** The time you spend learning skills is wasted if you do not balance that time with practicing and applying those skills.
+**DO NOT try to learn all of them at once.** It is important to balance your exploration with your application, balance learning new tools with practicing and using those skills. Time is our enemy, so we must be selective.
 
-Here are the top outcomes I think you can achieve by learning GLSL:
+Here are the top outcomes I think you can achieve by learning GLSL as a tool:
 
-1. Create simple light-weight custom visual OpenGL generators for browser, parallel processing, or low-performance devices such as a Raspberry Pi.
-2. Edit simple custom visual generators in real-time in a higher-level visual software such as TouchDesigner, Max/MSP, or Hydra.
-3. Create and use effects that do not exist in higher-level visual software, with the power of weird math.
+1. Create simple, light-weight, and customized visual OpenGL generators for web browsers, parallel processing, or low-performance devices such as a Raspberry Pi.
+2. Edit customized visual generators in real-time in a higher-level visual software such as TouchDesigner, Max/MSP, or Hydra.
+3. Create and use effects that do not exist yet in higher-level visual software, with the power of weird math.
 
-## Why this GLSL tutorial?
+## Why use this tutorial?
 
-Better tutorials exist. Below are GLSL tutorials that helped me learn and inspired this tutorial. They cover the fundamentals deeply. This tutorial, however, is an applied example of how those fundamentals can come together to create a visual composition, step by step.
+Better tutorials exist. Below are three GLSL resources that helped me learn and inspired this tutorial. They cover the fundamentals deeply. This tutorial, however, is an applied example of how those fundamentals can come together to create a visual composition, step by step.
 
 1. **[The Book of Shaders](https://thebookofshaders.com/00/){:target="_blank"} by Patricio Gonzalez Vivo & Jen Lowe.**\
 If this is your first time seeing GLSL code, sections 00 to 03 will help answer: What is 'GLSL' and 'Fragment Shaders' and what is the code syntax. Sections 04-on have thoughtful visual explanations of common functions used to draw in GLSL.
@@ -39,16 +39,18 @@ Provides guidance to the quirks of Shadertoy as a compiler, as well as [tips and
 
 ## Goals for this GLSL code:
 
-Before writing any code, I have found it helpful to write out what patterns or effects you are trying to create. This also helps define an end point.
+Before writing any code, I recommend listing your visual and code goals. This helps keep your exploration intentional and define an end point.
 
 1. Create a hypnotizing spiral pattern.
 2. Use frame buffer feedback delay.
 3. Make the pattern colorful and nice to look at (eye candy).
 4. Code runs in real time (< 17 ms, or > 60 FPS).
 
-## The GLSL Example: Interactive Spiral
+## The Example: A Melting Interactive Spiral
 
-The end result is shown below, running in Shadertoy. However, I recommend using "[The Force](https://shawnlawson.github.io/The_Force/){:target="_blank"}" GLSL compiler by Shawn Lawson for learning and experimenting, as it live-compiles and has some small quality-of-life functions. I encourage you to follow along and copy the codes into [The Force](https://shawnlawson.github.io/The_Force/){:target="_blank"} so you can experiment along the way.
+The end result is shown below, running in Shadertoy. However, I recommend using "[The Force](https://shawnlawson.github.io/The_Force/){:target="_blank"}" GLSL compiler by [Shawn Lawson](https://www.shawnlawson.com/bio/){:target="_blank"} for learning and experimenting, as it live-compiles and has some small quality-of-life functions. I encourage you to follow along and copy the codes into The Force so you can experiment along the way. 
+
+(*Also: shout out to [Char Stiles](https://charstiles.com/){:target="_blank"} for introducing me to The Force during her GLSL workshop at The Frank-Ratchye STUDIO for Creative Inquiry at CMU. She was an inspiration for making this tutorial. Check out [her work](https://www.youtube.com/watch?v=6QyzGgq64MM){:target="_blank"}!*)
 
 I have include some mouse interactivity in this shader. Click and drag on the screen!
 
@@ -56,11 +58,11 @@ I have include some mouse interactivity in this shader. Click and drag on the sc
 
 ## Step-by-step Walkthrough (Active Draft):
 
-NOTE: I am actively building up this documentation. Please check back in early June 2025 for the complete version!
+*NOTE: I am actively finalizing this documentation. Please check back in early June 2025 for the complete version!*
 
 ### 1) Create a blank screen.
 
-We first must create a canvas to 'draw' on. In GLSL, the canvas is a fragment shader which we specify using the global variable, or 'uniform' called `gl_FragColor` (A list of common default GLSL uniform variables is documented in the [Book of Shaders - Chapter 03](https://thebookofshaders.com/03/){:target="_blank"}). Each pixel on the shader can have a red, green, blue, and alpha value. Setting them all to zero produces a black screen.
+We first must create a canvas to 'draw' on. In GLSL, the canvas is a [fragment shader](https://www.youtube.com/watch?v=C1ZUeHLb0YU){:target="_blank"} which we specify using the global variable, or 'uniform' called `gl_FragColor` (A list of common default GLSL uniform variables is documented in the [Book of Shaders - Chapter 03](https://thebookofshaders.com/03/){:target="_blank"}). Each pixel on the shader can have a red, green, blue, and alpha value. Setting them all to zero produces a black screen.
 
 ```c++
 void main () {
@@ -79,7 +81,7 @@ _Figure 1: Blank Screen_
 
 ### 2) Color the basis coordinates.
 
-We often color shader pixels based on their coordinate location. We access the pixel coordinates through the input uniform `gl_FragCoord`, with the `[0.,0.]` origin at the bottom left corner, and the top right corner having being the `[width,height]` resolution of the window. It is common to normalize the coordinate system values from 0. to 1. for any resolution using a new set of "basis" vectors, (U,V). This is done by dividing the coordinate data by the uniform variable `resolution`. I've colored the blue and red channels by the X (U) and Y (V) axes below.
+We often color shader pixels based on their coordinate location. We access the pixel coordinates through the input uniform `gl_FragCoord`, where the bottom left corner pixel is the `[0.,0.]` origin, and the top right corner pixel value is the `[width,height]` resolution of the window. It is common to normalize the coordinate system values from 0. to 1. for any resolution using a new set of "basis" vectors, (U,V). This is done by dividing the coordinate data by the uniform variable `resolution`. I've colored the blue and red channels by the X (U) and Y (V) axes below.
 
 ```c++
 // Default Shader Inputs //
@@ -107,7 +109,7 @@ _Figure 2: Colored Basis Coordinates (U,V)_
 
 ### 3) Center the coordinate system.
 
-It will be easier to draw a spiral starting from the origin. We can move our origin by adding to or multiplying our coordinate basis vectors. Also, the basis coordinate system above is not square since we have a 16:9 aspect ratio. We can make our two basis vectors the same unit length in space by multiplying correction factor using the aspect ratio. I've annotated the output in post for clarity.
+It will be easier to draw a spiral starting from the origin. We can move our origin by adding to or multiplying our coordinate basis vectors. Also, our basis coordinate system above is not square since we have a 16:9 aspect ratio. We can make the two basis vectors the same unit length in space by multiplying a correction factor using the aspect ratio. I've annotated the output in post for clarity.
 
 ```c++
 void main () {
@@ -130,15 +132,22 @@ _Figure 3: Centered Basis Coordinate System_
 
 ### 4) Function to generate a spiral.
 
-We can draw a diagonal line in an U,V cartesian coordinate system by coloring pixels where U=V. Similarly, we can draw a spiral line in an R,$\theta$ polar coordinate system by coloring pixels where r=theta ([Wiki link](https://en.wikipedia.org/wiki/Polar_coordinate_system){:target="_blank"} for those not familiar with polar coordinates).
+We can draw a diagonal line in an U,V cartesian coordinate system by coloring pixels where U=V. Similarly, we can draw a spiral line in an r, $\theta$ polar coordinate system by coloring pixels where r= $\theta$ ([Wiki link](https://en.wikipedia.org/wiki/Polar_coordinate_system){:target="_blank"} for those not familiar with polar coordinates).
 
-I've created a function called `spiralWave()` to draw the spiral, with lines drawn as the positive portion of a `sin()`. After converting the U,V coordinates to R,$\theta$, we can draw a set of shrinking circles in `circles_zoom` over time (_try it in The Force_). Adding the $\theta$ coordinate shifts the circles into spirals. The output of the function (0. to 1. values across the coordinate system) are then assigned to the R,G,B channels of the fragment shader output.
+I've created a function called `spiralWave()` to draw the spiral, with lines drawn as the positive portion of a `sin()`. After converting the U,V coordinates to r, $\theta$, we can draw a set of shrinking circles in `circles_zoom` over time (*try this in [The Force](https://shawnlawson.github.io/The_Force/){:target="_blank"}*. Adding the $\theta$ coordinate shifts the circles into spirals. The output of the function (0. to 1. values across the coordinate system) are then assigned to the R,G,B channels of the fragment shader output.
 
 ```c++
 // Default Shader Inputs //
 // more info: https://thebookofshaders.com/03/
 
 // uniform float    time;               // shader playback time (in seconds)
+
+// Defined Variable Constants
+float goldenRatio = 0.618;
+float spiral_width = 20.;
+float zoom_speed = 2.;
+float num_spirals = 3.;
+float decay = .99;
 
 // Function: Generate Spiral
 float spiralWave(vec2 uv_centered, float curve_ratio, float rate, float num_spirals) {
@@ -176,7 +185,7 @@ void main () {
 
 ### 5) Aesthetic Golden Ratio spiral.
 
-To make the spiral pattern more '_hypnotizing_', I modified the spiral code above to draw curve paths similar to that of the golden ratio curve. Some of the mathematical logic to why `log(r)` shows up is explained on [Wiki](https://en.wikipedia.org/wiki/Golden_spiral#Mathematics){:target="_blank"}.
+To make the spiral pattern more '_hypnotizing_', I modified the spiral code above to follow paths similar to that of the golden ratio curve. The reason why `log(r)` shows up is explained on [Wiki](https://en.wikipedia.org/wiki/Golden_spiral#Mathematics){:target="_blank"}.
 
 ```c++
 // Function: Generate Golden Spiral
@@ -213,7 +222,7 @@ void main () {
 
 Let's use three steps to add some eye candy. 
 
-1) Oversaturate the `sin()`-generated line to get sharp edges. We can only see pixel intensities from 0. to 1., so scaling the sin to -50. to 50 will clip all values above 1. .
+1) Oversaturate the `sin()`-generated line to get sharp edges. We can only see pixel intensities from 0. to 1., so scaling the sin to a -50. to 50 range will clip all values above 1. .
 
 2) Invert half of the spiral output, changing the $\theta$ slicing angle with time.
 
@@ -239,7 +248,7 @@ void main () {
     float gray_spiral_rotate = gray_spiral_split*(sin( cos(invert_rotate+0.5)*uv_centered.y + sin(invert_rotate+0.5)*uv_centered.x)*20.);
     
     // Apply fractional value function, fract()
-    float gray_spiral_fract = fract(gray_spiral_rotate/100.);
+    float gray_spiral_fract = fract(gray_spiral_rotate);
     vec4 rbga_spiral_fract = vec4(vec3(gray_spiral_fract),1.0);
     
     // Output to screen
@@ -251,11 +260,11 @@ void main () {
 
 ### 7) Video feedback - linear translation.
 
-Feedback delay is achieved by saving the previous rendered frame and mixing it with the current frame. Fortunately, this is easily accessible in The Force by a pre-defined function `texture(backbuffer, uv)`, where the `backbuffer` is mapped to a U,V coordinate system. In Shadertoy and Max/MSP, however, one often has to get the previous frame using a second buffer shader. See the [Shadertoy implementation code](https://www.shadertoy.com/view/3XsSW8){:target="_blank"} for an example.
+Feedback delay is achieved by saving the previous rendered frame and mixing it with the current frame. Fortunately, the previous frame is easily accessible in The Force by a pre-defined function `texture2D(backbuffer, uv)`, where the `backbuffer` is mapped to a U,V coordinate system. In Shadertoy and Max/MSP, however, one often has to get the previous frame using a second 'buffer' shader. See the [Shadertoy implementation code](https://www.shadertoy.com/view/3XsSW8){:target="_blank"} for an example.
 
 To start simple, the coordinate system of the previous frame is diagonally offset by creating a new transformed U,V.
 
-For clarity, I've only applied the feedback on the right side of the shader, `uv.x >= 0.5`, using an if statement.\
+For clarity, I've only applied the feedback on the right side of the shader, where `uv.x >= 0.5`, using an if statement.\
 **This split view is a helpful trick for understanding and debugging any visual code.**
 
 ```c++
@@ -274,7 +283,7 @@ void main () {
     vec2 uv_transform = uv + vec2(-0.01, 0.0025);
     // Get the previously rendered frame into the current buffer.
     // In Shadertoy, iChannel0 = backbuffer
-    vec4 buffer_frame = texture(backbuffer, uv_transform);
+    vec4 buffer_frame = texture2D(backbuffer, uv_transform);
     
     // average the previous frame with current frame
     float mix_amount = 0.1;
@@ -296,9 +305,9 @@ void main () {
 
 ### 8) Video feedback - centered rotation.
 
-To make things more '_hypnotizing_', I wanted the feedback to also rotate. Thanks to linear algebra, our basis vectors can be rotated to any angle by applying a transformation matrix, defined below as `mat2 rotate(float angle)` ([3Blue1Brown has a wonderful video](https://youtu.be/kYB8IZa5AuE?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&t=212){:target="_blank"} explaining basis vector transformations).
+To make things more '_hypnotizing_', I wanted the feedback to also rotate. Thanks to linear algebra, our basis vectors can be rotated to any angle by applying a transformation matrix, defined below as `mat2 rotate(float angle)` ([3Blue1Brown has a wonderful video](https://youtu.be/kYB8IZa5AuE?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&t=212){:target="_blank"} explaining and visualizing basis vector transformations).
 
-There is one problem though: the transformation matrix assumes the basis vectors are at the default bottom left origin, not the center of the screen. While this can be corrected within the matrix, one simple solution is to temporarily move our centered fragment shader back to the corner origin, apply the rotation transformation, and re-center the shader. (_There may be a more elegant solution to this, let me know if so!_)
+There is one problem though: the transformation matrix assumes the basis vectors are at the default bottom left origin, not the center of the screen. While this can be corrected within the matrix, one simple solution is to temporarily move our centered shader back to the corner origin, apply the rotation transformation, and re-center the shader. (_There may be a more elegant solution to this, let me know if so!_)
 
 ```c++
 // Function: Generate Golden Spiral
@@ -327,13 +336,19 @@ void main () {
     uv_transform = uv_transform + vec2(0.5);
     // Get the previously rendered frame into the current buffer.
     // In Shadertoy, iChannel0 = backbuffer
-    vec4 buffer_frame = texture(backbuffer, uv_transform);
+    vec4 buffer_frame = texture2D(backbuffer, uv_transform);
     
     // average the previous frame with current frame
     float mix_amount = 0.1;
     vec4 rbga_feedback = mix(buffer_frame, rbga_spiral_fract, mix_amount);
     
     // Split the rendering screen per effect layer
+    vec4 rgba_mode_layer; // empty vec4
+    if(uv.x < 0.5)
+        rgba_mode_layer = rbga_spiral_fract;
+    else if(uv.x >= 0.5)
+        rgba_mode_layer = rbga_feedback;
+
     // Output to screen
 	gl_FragColor = rgba_mode_layer;
 }
@@ -343,7 +358,7 @@ void main () {
 
 ### 9) Delay eye-candy and fun functions.
 
-At this stage of shader development, it's ok to experiment by trial and error of different function combinations to see what produces interesting results. To add another level of eye candy, I added 2 more steps:
+At this stage of shader development, it's ok to experiment by the trial and error of different function combinations to see what yields interesting results. To add another level of eye candy, I added 2 more steps:
 
 1. Slightly shift the color of every delayed frame buffer.
 
@@ -365,7 +380,7 @@ void main () {
  
     // Get the previously rendered frame into the current buffer.
     // In Shadertoy, iChannel0 = backbuffer
-    vec4 buffer_frame = texture(backbuffer, uv_transform); 
+    vec4 buffer_frame = texture2D(backbuffer, uv_transform); 
     // add slight color shift per buffer
     buffer_frame = (buffer_frame - vec4(0.0, 0.01, 0.05, 1.0)) * decay;
     
@@ -383,11 +398,38 @@ void main () {
 
 <iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/W32XRV?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
 
-### 10) Full code with mouse interactivity.
+### 10) Adding mouse interactivity.
 
-With that, the shader is complete. As a bonus step, we can add mouse interactivity by adding `float mouse_pos_x = mouse.x/resolution.x;`, and adjusting a parameter such as the rotation speed, frame delay mixing intensity, or the position of which layers get displayed.
+With that, the shader is complete. As a bonus step, we can add mouse interactivity by adding `float mouse_pos_x = mouse.x/resolution.x;`, and adjusting a parameter such as the rotation speed, frame delay mixing intensity, or the position of which layers get displayed. The full code (written for The Force) is below in the Appendix.
+
+## How are GLSL shaders used in practice?
+
+In addition to being fun to look at, what purpose can this spiral shader serve for a performing artist? Here is how I used part of **this** shader in my mainstage visuals at MAGFest Super 2025 with [AmateurLSDJ](https://amateurlsdj.bandcamp.com/music){:target="_blank"} (Tyrese).
+
+I wanted to create a unique visual theme for every song in Tyrese's set. One song was called [Golden Ratio](https://amateurlsdj.bandcamp.com/track/golden-ratio-2){:target="_blank"}, and I had the golden ratio spiral stuck in my head. A pre-rendered video of a spiral asset was not an option as all my live visuals are audio-reactive and I like tweaking pattern details on stage. Once a GLSL shader is made, it can run within Max/MSP using a `jit.gl.slab @file Golden-Ratio.jxs` block and accept external 'param' variables. Note that pure GLSL or shadertoy code requires some minor translation to run Max and other software. See [Federico Foderaro's video](https://www.youtube.com/watch?v=WpcsiuqrjwQ){:target="_blank"} for guidance.
+
+In addition to live rendering, 2D GLSL codes are efficient enough to run multiple of the same shader in parallel on a laptop GPU. So, I added a 2D physics engine in my Max/MSP patch, where every 'ball' was a mini spiral shader plane. For simplicity, each 'ball' had the same shader input and slight transformations on the 'ball' planbes themselves. While I only fully controlled two GLSL shaders in parallel, in theory one could have a unique shader for every 'ball'. The bottleneck then becomes managing variables in your higher-level visual software, not the compute time.
+
+With some `jit.gl.pix` effects layered on top (which is just node-code GLSL), this is how it turned out!\
+(skip to 14:20)
+
+{% include embed/youtube.html id='x2Vx9wDsfDc'%}
+
+## Concluding remarks
+
+I learned a lot more about GLSL by writing and explaining my code in this tutorial. **I am no GLSL expert**, so there may be errors in some of my explanations. If you have more experience and spot an opportunity to improve this page, please let me know and I will revise!
+
+Stay safe and look out for each other <3 \
+_- pip :P_
+
+---
+
+## Appendix A: Full Shader Code
 
 ```c++
+// Mini Lecture - A GLSL Tutorial in Practice //
+// Plasma Pip   - 2025 //
+
 // Shader Inputs (on by default) //
 // more info: https://thebookofshaders.com/03/
 
@@ -457,7 +499,7 @@ void main () {
     // Invert half of the spiral again, but in the opposite direction
     float gray_spiral_rotate = gray_spiral_split*(sin( cos(invert_rotate+0.5)*uv_centered.y + sin(invert_rotate+0.5)*uv_centered.x)*20.);
     // Apply fractional value function, fract()
-    float gray_spiral_fract = fract(gray_spiral_rotate/100.);
+    float gray_spiral_fract = fract(gray_spiral_rotate);
     vec4 rbga_spiral_fract = vec4(vec3(gray_spiral_fract),1.0);
     
     // FEEDBACK!
@@ -503,25 +545,6 @@ void main () {
 // uniform vec4     backbuffer;         // Stores gl_FragColor from previous frame
 ```
 
-## How are GLSL shaders used in practice?
-
-In addition to being fun to look at, what purpose can this spiral shader serve for a performing artist? Here is how I used part of this very shader in my mainstage visuals at MAGFest Super 2025 with [AmateurLSDJ](https://amateurlsdj.bandcamp.com/music){:target="_blank"} (Tyrese).
-
-I wanted to create a unique visual theme for every song in Tyrese's set. One song was called [Golden Ratio](https://amateurlsdj.bandcamp.com/track/golden-ratio-2){:target="_blank"}, and I had the golden ratio spiral stuck in my head. A pre-rendered video of a spiral asset was not an option as all my live visuals are audio-reactive and I like tweaking pattern details on stage. Once a GLSL shader is made, it can run within Max/MSP using a `jit.gl.slab @file Golden-Ratio.jxs` block and accept external 'param' variables. Note that pure GLSL or shadertoy code requires some minor translation to run Max and other software, see [Federico Foderaro's video](https://www.youtube.com/watch?v=WpcsiuqrjwQ){:target="_blank"} for guidance.
-
-In addition to live rendering, GLSL codes are so efficient that you can run multiple of the same shader in parallel on a laptop GPU. So, I added a 2D physics engine in my Max/MSP patch, where every 'ball' was a mini spiral shader. For simplicity, each 'ball' had the same shader input and slight transformations on the 'balls' themselves. While I only fully controlled two GLSL shaders in parallel, one could in theory have a unique shader for every 'ball'. The bottleneck then becomes managing variables in your higher-level visual software, not the compute time.
-
-With some `jit.gl.pix` effects layered on top (which is just node-code GLSL), this is how it turned out!
-(skip to 14:20)
-
-{% include embed/youtube.html id='x2Vx9wDsfDc'%}
-
-## Concluding remarks
-
-I learned a lot more about GLSL by writing and explaining my code in this tutorial. **I am no GLSL expert**, so there may be errors in some of my explanations. If you have more experience and spot an opportunity to improve this page, please let me know and I will revise!
-
--_pip :P_
-
 ---
 
-*The files within this web page are licensed under a [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/){:target="_blank"} Attribution-NonCommercial-ShareAlike International license.*
+*The exact code and files within this web page are licensed under a [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/){:target="_blank"} Attribution-NonCommercial-ShareAlike International license. (AKA: Make it your own before calling it your own)*
