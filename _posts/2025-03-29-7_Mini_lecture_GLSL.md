@@ -13,52 +13,48 @@ image:
 
 ## Before we begin: Why learn GLSL?
 
-There is an extensive collection of creative coding and audio/visual software that one can learn to create art (Visualist/DJ lime68k has listed 57 on their [vjing tools and resources list](https://l68k.com/things/vjing){:target="_blank"} ). 
+There is an extensive collection of creative coding and audio/visual software available for learning how to create video art. Visualist/DJ Lime68k has listed over 55 on their [vjing tools and resources list](https://l68k.com/things/vjing){:target="_blank"}, and art mathematician Andrei Jay has a similar [resource list](https://andreijaycreativecoding.com/Resources){:target="_blank"} (_these are both amazing resources_). There are also hardware video synths.
 
-**DO NOT try to learn all of them at once.** It is important to balance your exploration with your application, balance learning new tools with practicing and using those skills. Time is our enemy, so we must be selective.
+**Do not try to learn everything all at once.** It is important to balance exploration with application, balancing the learning of new tools with the practice and use of those skills. Time is our enemy, so we must be selective.
 
 Here are the top outcomes I think you can achieve by learning GLSL as a tool:
 
-1. Create simple, light-weight, and customized visual OpenGL generators for web browsers, parallel processing, or low-performance devices such as a Raspberry Pi.
+1. Create simple, light-weight, and customized visual OpenGL generators for web browsers, parallel processing, or low-performance devices such as a Raspberry Pi [^footnote].
 2. Edit customized visual generators in real-time in a higher-level visual software such as TouchDesigner, Max/MSP, or Hydra.
 3. Create and use effects that do not exist yet in higher-level visual software, with the power of weird math.
 
 ## Why use this tutorial?
 
-Better tutorials exist. Below are three GLSL resources that helped me learn and inspired this tutorial. They cover the fundamentals deeply. This tutorial, however, is an applied example of how those fundamentals can come together to create a visual composition, step by step.
+Better tutorials exist. Below are three GLSL resources that helped me learn and inspired this tutorial. They cover the fundamentals in depth. This tutorial, however, serves as a practical example of how those fundamentals can come together to create a visual composition, step by step.
 
 1. **[The Book of Shaders](https://thebookofshaders.com/00/){:target="_blank"} by Patricio Gonzalez Vivo & Jen Lowe.**\
-If this is your first time seeing GLSL code, sections 00 to 03 will help answer: What is 'GLSL' and 'Fragment Shaders' and what is the code syntax. Sections 04-on have thoughtful visual explanations of common functions used to draw in GLSL.
+If this is your first time seeing GLSL code, sections 00 to 03 will help answer: What is 'GLSL' and 'Fragment Shaders', and what is the code syntax. Sections 04-on have thoughtful visual explanations of common functions used to draw in GLSL.
 
 2. **Inigo Quilez's [video](https://iquilezles.org/live/){:target="_blank"} and [written](https://iquilezles.org/articles/){:target="_blank"} computer graphics tutorials.**\
 Inigo has many wonderful resources on 2D/3D GLSL rendering and elegant math code. A few of my favorites include: [Learn to Paint with Mathematics](https://www.youtube.com/watch?v=0ifChJ0nJfM){:target="_blank"}, [Coding the main bulb of the Mandelbrot set](https://iquilezles.org/articles/mset1bulb/){:target="_blank"}, and [coding wavelet image compression](https://iquilezles.org/articles/wavelet/){:target="_blank"} (aka, part of .JPG compression)
 
-3. **'Shadertoy – unofficial' tutorial [blog posts](https://shadertoyunofficial.wordpress.com/){:target="_blank"}.**\
+3. **'Shadertoy – unofficial' tutorial [blog posts](https://shadertoyunofficial.wordpress.com/2018/04/16/readings-shaders-maths-3d/){:target="_blank"}.**\
 Provides guidance to the quirks of Shadertoy as a compiler, as well as [tips and tricks](https://shadertoyunofficial.wordpress.com/2016/07/21/usual-tricks-in-shadertoyglsl/){:target="_blank"}.
 
 
-## Goals for this GLSL code:
+## Goals for this GLSL code.
 
-Before writing any code, I recommend listing your visual and code goals. This helps keep your exploration intentional and define an end point.
+Before writing any code, I recommend outlining your visual and code goals. This helped to keep my exploration intentional and defined an end point.
 
 1. Create a hypnotizing spiral pattern.
 2. Use frame buffer feedback delay.
-3. Make the pattern colorful and nice to look at (eye candy).
+3. Make the pattern colorful and nice (eye candy).
 4. Code runs in real time (< 17 ms, or > 60 FPS).
 
-## The Example: A Melting Interactive Spiral
+## The Example: A Melting Interactive Spiral.
 
-The end result is shown below, running in Shadertoy. However, I recommend using "[The Force](https://shawnlawson.github.io/The_Force/){:target="_blank"}" GLSL compiler by [Shawn Lawson](https://www.shawnlawson.com/bio/){:target="_blank"} for learning and experimenting, as it live-compiles and has some small quality-of-life functions. I encourage you to follow along and copy the codes into The Force so you can experiment along the way. 
+The end result is shown below, running in Shadertoy. However, I recommend using "[The Force](https://shawnlawson.github.io/The_Force/){:target="_blank"}" GLSL compiler by [Shawn Lawson](https://www.shawnlawson.com/bio/){:target="_blank"} for learning and experimenting, as it live-compiles and has some small quality-of-life functions [^fn-nth-2]. I encourage you to follow along and copy the codes into The Force so you can experiment along the way. 
 
-(*Also: shout out to [Char Stiles](https://charstiles.com/){:target="_blank"} for introducing me to The Force during her GLSL workshop at The Frank-Ratchye STUDIO for Creative Inquiry at CMU. She was an inspiration for making this tutorial. Check out [her work](https://www.youtube.com/watch?v=6QyzGgq64MM){:target="_blank"}!*)
-
-I have include some mouse interactivity in this shader. Click and drag on the screen!
+I have included some mouse interactivity in this shader. Click and drag on the screen!
 
 <iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/W3s3z8?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
 
-## Step-by-step Walkthrough (Active Draft):
-
-*NOTE: I am actively finalizing this documentation. Please check back in early June 2025 for the complete version!*
+## Step-by-step Walkthrough:
 
 ### 1) Create a blank screen.
 
@@ -81,7 +77,7 @@ _Figure 1: Blank Screen_
 
 ### 2) Color the basis coordinates.
 
-We often color shader pixels based on their coordinate location. We access the pixel coordinates through the input uniform `gl_FragCoord`, where the bottom left corner pixel is the `[0.,0.]` origin, and the top right corner pixel value is the `[width,height]` resolution of the window. It is common to normalize the coordinate system values from 0. to 1. for any resolution using a new set of "basis" vectors, (U,V). This is done by dividing the coordinate data by the uniform variable `resolution`. I've colored the blue and red channels by the X (U) and Y (V) axes below.
+We often color shader pixels based on their coordinate locations. We access the pixel coordinates through the input uniform `gl_FragCoord`, where the bottom left corner pixel is the `[0.,0.]` origin, and the top right corner pixel value is the `[width,height]` resolution of the window. It is common to normalize the coordinate system values from 0. to 1. for any resolution using a new set of "basis" vectors, (U,V). This is done by dividing the coordinate data by the uniform variable `resolution`. I've colored the blue and red channels using the X (U) and Y (V) axes below.
 
 ```c++
 // Default Shader Inputs //
@@ -134,7 +130,7 @@ _Figure 3: Centered Basis Coordinate System_
 
 We can draw a diagonal line in an U,V cartesian coordinate system by coloring pixels where U=V. Similarly, we can draw a spiral line in an r, $\theta$ polar coordinate system by coloring pixels where r= $\theta$ ([Wiki link](https://en.wikipedia.org/wiki/Polar_coordinate_system){:target="_blank"} for those not familiar with polar coordinates).
 
-I've created a function called `spiralWave()` to draw the spiral, with lines drawn as the positive portion of a `sin()`. After converting the U,V coordinates to r, $\theta$, we can draw a set of shrinking circles in `circles_zoom` over time (*try this in [The Force](https://shawnlawson.github.io/The_Force/){:target="_blank"}*. Adding the $\theta$ coordinate shifts the circles into spirals. The output of the function (0. to 1. values across the coordinate system) are then assigned to the R,G,B channels of the fragment shader output.
+I've created a function called `spiralWave()` to draw the spiral, with lines drawn as the positive portion of a `sin()`. After converting the U,V coordinates to r, $\theta$, we can draw a set of shrinking circles in `circles_zoom` over time (*try this in [The Force](https://shawnlawson.github.io/The_Force/){:target="_blank"}*. Adding the $\theta$ coordinate shifts the circles into spirals. The output of the function (0. to 1. values across the coordinate system) is then assigned to the R,G,B channels of the fragment shader output.
 
 ```c++
 // Default Shader Inputs //
@@ -305,9 +301,9 @@ void main () {
 
 ### 8) Video feedback - centered rotation.
 
-To make things more '_hypnotizing_', I wanted the feedback to also rotate. Thanks to linear algebra, our basis vectors can be rotated to any angle by applying a transformation matrix, defined below as `mat2 rotate(float angle)` ([3Blue1Brown has a wonderful video](https://youtu.be/kYB8IZa5AuE?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&t=212){:target="_blank"} explaining and visualizing basis vector transformations).
+To make things more '_hypnotizing_', I wanted the feedback to also rotate. Thanks to linear algebra, our basis vectors can be rotated to any angle by applying a [rotation matrix](https://en.wikipedia.org/wiki/Rotation_matrix){:target="_blank"}, defined below as `mat2 rotate(float angle)` ([3Blue1Brown has a wonderful video](https://youtu.be/kYB8IZa5AuE?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&t=212){:target="_blank"} explaining and visualizing basis vector transformations).
 
-There is one problem though: the transformation matrix assumes the basis vectors are at the default bottom left origin, not the center of the screen. While this can be corrected within the matrix, one simple solution is to temporarily move our centered shader back to the corner origin, apply the rotation transformation, and re-center the shader. (_There may be a more elegant solution to this, let me know if so!_)
+There is one problem though: the rotation matrix assumes the basis vectors are at the default bottom left origin, not the center of the screen. While this can be corrected within the matrix, one simple solution is to temporarily move our centered shader back to the corner origin, apply the rotation transform, and then re-center the shader. (_There may be a more elegant solution to this, let me know if so!_)
 
 ```c++
 // Function: Generate Golden Spiral
@@ -408,14 +404,14 @@ In addition to being fun to look at, what purpose can this spiral shader serve f
 
 I wanted to create a unique visual theme for every song in Tyrese's set. One song was called [Golden Ratio](https://amateurlsdj.bandcamp.com/track/golden-ratio-2){:target="_blank"}, and I had the golden ratio spiral stuck in my head. A pre-rendered video of a spiral asset was not an option as all my live visuals are audio-reactive and I like tweaking pattern details on stage. Once a GLSL shader is made, it can run within Max/MSP using a `jit.gl.slab @file Golden-Ratio.jxs` block and accept external 'param' variables. Note that pure GLSL or shadertoy code requires some minor translation to run Max and other software. See [Federico Foderaro's video](https://www.youtube.com/watch?v=WpcsiuqrjwQ){:target="_blank"} for guidance.
 
-In addition to live rendering, 2D GLSL codes are efficient enough to run multiple of the same shader in parallel on a laptop GPU. So, I added a 2D physics engine in my Max/MSP patch, where every 'ball' was a mini spiral shader plane. For simplicity, each 'ball' had the same shader input and slight transformations on the 'ball' planbes themselves. While I only fully controlled two GLSL shaders in parallel, in theory one could have a unique shader for every 'ball'. The bottleneck then becomes managing variables in your higher-level visual software, not the compute time.
+In addition to live rendering, 2D GLSL codes are efficient enough to run multiple of the same shader in parallel on a laptop GPU. So, I added a 2D physics engine in my Max/MSP patch, where every 'ball' was a mini spiral shader plane. For simplicity, each 'ball' had the same shader input and slight transformations on the 'ball' planes themselves. While I only fully controlled two GLSL shaders in parallel, in theory one could have a unique shader for every 'ball'. The bottleneck then becomes managing variables in your higher-level visual software, not the compute time.
 
 With some `jit.gl.pix` effects layered on top (which is just node-code GLSL), this is how it turned out!\
 (skip to 14:20)
 
 {% include embed/youtube.html id='x2Vx9wDsfDc'%}
 
-## Concluding remarks
+## Concluding remarks.
 
 I learned a lot more about GLSL by writing and explaining my code in this tutorial. **I am no GLSL expert**, so there may be errors in some of my explanations. If you have more experience and spot an opportunity to improve this page, please let me know and I will revise!
 
@@ -424,7 +420,7 @@ _- pip :P_
 
 ---
 
-## Appendix A: Full Shader Code
+## Appendix A: Full Shader Code.
 
 ```c++
 // Mini Lecture - A GLSL Tutorial in Practice //
@@ -545,6 +541,12 @@ void main () {
 // uniform vec4     backbuffer;         // Stores gl_FragColor from previous frame
 ```
 
+*The exact code and files within this web page are licensed under a [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/){:target="_blank"} Attribution-NonCommercial-ShareAlike International license. (AKA: Make it your own before calling it your own)*
+
 ---
 
-*The exact code and files within this web page are licensed under a [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/){:target="_blank"} Attribution-NonCommercial-ShareAlike International license. (AKA: Make it your own before calling it your own)*
+## Appendix B: Footnotes.
+
+[^footnote]: I have not run GLSL on Raspberry Pis myself, but here are the resources I am aware of: 1) Antonin Stefanutti wrote a guide on [Running GLSL on DRM/KMS Linux kernel subsystems](https://github.com/astefanutti/kms-glsl){:target="_blank"}. 2) Andrei Jay creates and sells pre-formatted Raspberry Pi synths called '[VSERPI](https://andreijaycreativecoding.com/Video-Synthesis-Ecosphere-RPI){:target="_blank"}', with [open source code](https://andreijaycreativecoding.com/VSERPI-hardware-and-images){:target="_blank"}.
+
+[^fn-nth-2]: Shout out to [Char Stiles](https://charstiles.com/){:target="_blank"} for introducing me to The Force during her GLSL workshop at The Frank-Ratchye STUDIO for Creative Inquiry at CMU. She was an inspiration for making this tutorial. Check out [her work](https://www.youtube.com/watch?v=6QyzGgq64MM){:target="_blank"}!

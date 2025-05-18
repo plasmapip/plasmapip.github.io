@@ -4,7 +4,7 @@ icon: fas fa-stream
 order: 4
 ---
 
-I have created a mailing list to communicate to those who would like updates on my work. I expect to send out updates on a 3 to 6 month interval at best.
+I have created a mailing list to communicate to those who would like updates on my work, outside of crumbling social media. I expect to send out updates on a 3 to 6 month interval at best.
 
 Email updates will include:
 
