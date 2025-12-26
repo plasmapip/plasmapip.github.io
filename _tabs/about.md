@@ -8,7 +8,7 @@ order: 1
 
 (they/he, 27, based in US Pittsburgh area)
 
-“Plasma Pip” is my creative outlet online, focusing on music and audio-visual art.
+“Plasma Pip” is my creative outlet, focusing on music and audio-visual art.
 My work interests include: art communication, sensory kinesthesia, and audio augmentation.
 
 For general inquiries:  plasmapip(at)gmail(dot)com

@@ -6,12 +6,12 @@ permalink: commission
 ---
 
 <h1 style="text-align: center;">Visualist Commission Status:</h1>
-<p style="text-align: center;">(as of 2025-Q2)</p>
+<p style="text-align: center;">(as of 2026-Q1)</p>
 
-**IRL Visuals:** Tentative \\
+**IRL Visuals:** Tentative, ask. \\
 **URL Visuals:** CLOSED
 
-Interested in collaborating, or just talking shop? Please reach out!
+Interested in collaborating, or have a question about visuals? You are welcome reach out.
 
 <h1 style="text-align: center;">Commission Portfolio:</h1>
 <p style="text-align: center;">All performed live</p>

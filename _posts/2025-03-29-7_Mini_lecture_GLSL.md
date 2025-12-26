@@ -7,8 +7,8 @@ permalink: post/07_mini-lecture-GLSL
 tags: Learning
 math: True
 image:
-  path: assets/posts/7_GLSL-mini-lecture/GLSL-mini-cover_pp.jpg
-  alt: A GLSL Shader, frozen with anticipation.
+  path: https://res.cloudinary.com/dp5qoqnat/image/upload/L1_GLSL-Lecture_2x-540pthumb-opt_awsu96.gif
+  alt: A GLSL Shader, explained step-by-step.
 ---
 
 ## Before we begin: Why learn GLSL?
@@ -48,11 +48,10 @@ Before writing any code, I recommend outlining your visual and code goals. This 
 
 ## The Example: A Melting Interactive Spiral.
 
-The end result is shown below, running in Shadertoy. However, I recommend using "[The Force](https://shawnlawson.github.io/The_Force/){:target="_blank"}" GLSL compiler by [Shawn Lawson](https://www.shawnlawson.com/bio/){:target="_blank"} for learning and experimenting, as it live-compiles and has some small quality-of-life functions [^fn-nth-2]. I encourage you to follow along and copy the codes into The Force so you can experiment along the way. 
+The end result is shown below. You can view it running live in Shadertoy [here](https://www.shadertoy.com/view/W3s3z8){:target="_blank"}. However, I recommend you use "[The Force](https://shawnlawson.github.io/The_Force/){:target="_blank"}" GLSL compiler by [Shawn Lawson](https://www.shawnlawson.com/bio/){:target="_blank"} for learning and experimenting, as it live-compiles and has some small quality-of-life functions [^fn-nth-2]. I encourage you to follow along and copy the codes into The Force so you can experiment along the way. 
 
-I have included some mouse interactivity in this shader. Click and drag on the screen!
-
-<iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/W3s3z8?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
+<iframe src="https://drive.google.com/file/d/1goCXLy_PMzAl5xx-solSVA3MJLW5X9Sm/preview" width="800" height="450" style="pointer-events: none; border: none;"></iframe>
+_GIF 0: End shader result. View the Shadertoy code [here](https://www.shadertoy.com/view/W3s3z8){:target="_blank"}._
 
 ## Step-by-step Walkthrough:
 
@@ -73,7 +72,7 @@ void main () {
 
 ![1_Blank-Screen](assets/posts/7_GLSL-mini-lecture/1_Blank-Screen.png)
 
-_Figure 1: Blank Screen_
+_Figure 1: Blank screen._
 
 ### 2) Color the basis coordinates.
 
@@ -101,7 +100,7 @@ void main () {
 
 ![2_Blank-Screen](assets/posts/7_GLSL-mini-lecture/2_Color-Coordinates.png)
 
-_Figure 2: Colored Basis Coordinates (U,V)_
+_Figure 2: Colored basis coordinates (U,V)._
 
 ### 3) Center the coordinate system.
 
@@ -124,7 +123,7 @@ void main () {
 
 ![3_Center-Coordinate-System](assets/posts/7_GLSL-mini-lecture/3_Center-Coordinate-System.png)
 
-_Figure 3: Centered Basis Coordinate System_
+_Figure 3: Centered basis coordinate system._
 
 ### 4) Function to generate a spiral.
 
@@ -177,7 +176,8 @@ void main () {
 }
 ```
 
-<iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/W323Dz?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
+<iframe src="https://drive.google.com/file/d/1Lt0bjdQ7WZnOpyKb9bh_u_blIWkGtNHk/preview" width="800" height="450" style="pointer-events: none; border: none;"></iframe>
+_GIF 4: A spiral function. View the Shadertoy code [here](https://www.shadertoy.com/view/W323Dz){:target="_blank"}._
 
 ### 5) Aesthetic Golden Ratio spiral.
 
@@ -212,13 +212,14 @@ void main () {
 }
 ```
 
-<iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/t32GWR?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
+<iframe src="https://drive.google.com/file/d/1jjXFU-kZbOPvLvLTISq-aj8VhW54pAtM/preview" width="800" height="450" style="pointer-events: none; border: none;"></iframe>
+_GIF 5: Golden ratio spiral function. View the Shadertoy code [here](https://www.shadertoy.com/view/t32GWR){:target="_blank"}._
 
 ### 6) Add spiral pattern eye candy.
 
 Let's use three steps to add some eye candy. 
 
-1) Oversaturate the `sin()`-generated line to get sharp edges. We can only see pixel intensities from 0. to 1., so scaling the sin to a -50. to 50 range will clip all values above 1. .
+1) Oversaturate the `sin()`-generated line to get sharp edges. We can only see pixel intensities from 0. to 1., so scaling the sin to a -50. to 50. range will clip all values above 1. .
 
 2) Invert half of the spiral output, changing the $\theta$ slicing angle with time.
 
@@ -252,7 +253,8 @@ void main () {
 }
 ```
 
-<iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/t3j3WR?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
+<iframe src="https://drive.google.com/file/d/1giHU3oFb6-yizGV4FZdKNt-V91GpCf9O/preview" width="800" height="450" style="pointer-events: none; border: none;"></iframe>
+_GIF 6: Spiral with fract() applied. View the Shadertoy code [here](https://www.shadertoy.com/view/t3j3WR){:target="_blank"}._
 
 ### 7) Video feedback - linear translation.
 
@@ -297,7 +299,8 @@ void main () {
 }
 ```
 
-<iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/3XsSW8?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
+<iframe src="https://drive.google.com/file/d/1xbN35KjlbkHQCI606vfFOdqRF_I9lh3e/preview" width="800" height="450" style="pointer-events: none; border: none;"></iframe>
+_GIF 7: Linear frame feedback. View the Shadertoy code [here](https://www.shadertoy.com/view/3XsSW8){:target="_blank"}._
 
 ### 8) Video feedback - centered rotation.
 
@@ -350,7 +353,8 @@ void main () {
 }
 ```
 
-<iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/3XjXRV?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
+<iframe src="https://drive.google.com/file/d/1KWgHpMcGZKP1Tl7eaqIGu8IQk1xuwp8o/preview" width="800" height="450" style="pointer-events: none; border: none;"></iframe>
+_GIF 8: Rotational frame feedback. View the Shadertoy code [here](https://www.shadertoy.com/view/3XjXRV){:target="_blank"}._
 
 ### 9) Delay eye-candy and fun functions.
 
@@ -392,11 +396,11 @@ void main () {
 }
 ```
 
-<iframe width="800" height="450" frameborder="0" src="https://www.shadertoy.com/embed/W32XRV?gui=true&t=10&paused=false&muted=true" allowfullscreen></iframe>
-
-### 10) Adding mouse interactivity.
-
 With that, the shader is complete. As a bonus step, we can add mouse interactivity by adding `float mouse_pos_x = mouse.x/resolution.x;`, and adjusting a parameter such as the rotation speed, frame delay mixing intensity, or the position of which layers get displayed. The full code (written for The Force) is below in the Appendix.
+
+<iframe src="https://drive.google.com/file/d/1goCXLy_PMzAl5xx-solSVA3MJLW5X9Sm/preview" width="800" height="450" style="pointer-events: none; border: none;"></iframe>
+_GIF 9: Additional effects. View the Shadertoy code for the mouse interactivity, [here](https://www.shadertoy.com/view/W3s3z8){:target="_blank"}._
+
 
 ## How are GLSL shaders used in practice?
 
@@ -415,7 +419,7 @@ With some `jit.gl.pix` effects layered on top (which is just node-code GLSL), th
 
 I learned a lot more about GLSL by writing and explaining my code in this tutorial. **I am no GLSL expert**, so there may be errors in some of my explanations. If you have more experience and spot an opportunity to improve this page, please let me know and I will revise!
 
-Stay safe and look out for each other <3 \
+Take care and look out for each other <3 \
 _- pip :P_
 
 ---
